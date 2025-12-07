@@ -288,6 +288,7 @@ html, body {
     visibility: hidden;
     transform: translateX(-100%);
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none; /* 穿透點擊，不阻擋下方元素 */
 }
 
 /* 顯示角色圖片時的動畫 */

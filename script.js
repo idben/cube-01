@@ -429,10 +429,13 @@ document.addEventListener('mouseup', () => {
 document.addEventListener('touchstart', (e) => {
     isDragging = true;
     previousMouseX = e.touches[0].clientX;
-});
+}, { passive: true });
 
 document.addEventListener('touchmove', (e) => {
     if (isDragging && cubeGroup && canRotate) {
+        // 防止頁面滑動
+        e.preventDefault();
+
         // 計算觸控水平移動距離
         const deltaX = e.touches[0].clientX - previousMouseX;
         // 水平滑動控制 Y 軸旋轉
@@ -445,7 +448,7 @@ document.addEventListener('touchmove', (e) => {
 
         previousMouseX = e.touches[0].clientX;
     }
-});
+}, { passive: false });
 
 document.addEventListener('touchend', () => {
     isDragging = false;
