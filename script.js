@@ -621,8 +621,9 @@ function showCharacter(characterId) {
  * @param {string} message - 對話框訊息
  * @param {function} onConfirm - 確定按鈕的回調函數
  * @param {string} characterType - 角色類型 ('happy', 'sad', 'pass' 或空字串)
+ * @param {boolean} showCancel - 是否顯示取消按鈕 (預設 false)
  */
-function showDialog(title, message, onConfirm, characterType = '') {
+function showDialog(title, message, onConfirm, characterType = '', showCancel = false) {
     const wrapper = document.querySelector('#dialog-wrapper');
     const dialog = document.querySelector('#confirm-dialog');
     const titleEl = document.querySelector('#dialog-title');
@@ -633,6 +634,9 @@ function showDialog(title, message, onConfirm, characterType = '') {
     // 設定對話框內容
     titleEl.textContent = title;
     messageEl.textContent = message;
+
+    // 控制取消按鈕的顯示
+    cancelBtn.style.display = showCancel ? 'inline-block' : 'none';
 
     // 顯示對應的角色圖片
     if (characterType) {
