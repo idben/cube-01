@@ -9,18 +9,27 @@
 html, body {
     width: 100%;
     height: 100%;
+    height: 100dvh; /* 使用動態視口高度，解決手機瀏覽器地址欄問題 */
     overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* 防止手機上的彈性滾動 */
+    overscroll-behavior: none;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 /* ===== Canvas 容器樣式 ===== */
 #canvas-container {
     width: 100%;
     height: 100%;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* 防止觸控時的額外滾動 */
+    touch-action: none;
 }
 
 /* Three.js 畫布樣式 */
