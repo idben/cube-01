@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>立方塊算數練習</title>
+    <title>數積木遊戲</title>
     <!-- 引入外部 CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,20 +18,20 @@
 
     <!-- 答題區域 -->
     <div id="answer-panel">
-        <label for="answer-input">這個結構用了多少個立方塊?</label>
+        <label for="answer-input">數數看，總共有幾個積木呢？</label>
         <div id="answer-input-group">
             <input type="number" id="answer-input" min="1" placeholder="輸入數字" inputmode="numeric" pattern="[0-9]*">
-            <button class="btn btn-success" id="submit-btn">提交答案</button>
+            <button class="btn btn-success" id="submit-btn">我答好了！</button>
         </div>
     </div>
 
     <!-- 過關畫面 -->
     <div id="victory-screen">
         <div class="victory-content">
-            <h1 class="victory-title">恭喜過關!</h1>
-            <p class="victory-message">你完成了所有 10 題!</p>
-            <p class="victory-score">最終分數: <span id="final-score">0</span> 分</p>
-            <button class="btn btn-primary" id="restart-btn">再玩一次</button>
+            <h1 class="victory-title">好棒！全部答對了！</h1>
+            <p class="victory-message">你完成了 10 題，太厲害了！</p>
+            <p class="victory-score">你得到 <span id="final-score">0</span> 分！</p>
+            <button class="btn btn-primary" id="restart-btn">再玩一次！</button>
         </div>
     </div>
 

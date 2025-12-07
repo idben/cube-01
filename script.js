@@ -4,7 +4,7 @@ import * as THREE from 'three';
 // ===== 全域變數 =====
 // Three.js 核心物件
 let scene, camera, renderer;
-let cubeGroup;                     // 立方塊組合群組
+let cubeGroup;                     // 積木組合群組
 
 // 旋轉控制變數
 let targetRotationY = 0;           // 目標旋轉角度 (繞 Y 軸)
@@ -65,9 +65,9 @@ function playVictorySound() {
     playSound('victory');
 }
 
-// ===== 隨機立方塊生成系統 =====
+// ===== 隨機積木生成系統 =====
 /**
- * 生成層狀立方塊結構
+ * 生成層狀積木結構
  * 從視覺最遠的角落開始填充，逐層遞減
  * @returns {Array} - 3D 座標陣列 [[x, y, z], ...]
  */
@@ -193,26 +193,26 @@ function init() {
     container.appendChild(renderer.domElement);
 }
 
-// ===== 建立立方塊堆疊函數 =====
+// ===== 建立積木堆疊函數 =====
 /**
- * 根據座標陣列建立立方塊堆疊結構
+ * 根據座標陣列建立積木堆疊結構
  * @param {Array} structure - 座標陣列 [[x, y, z], ...]
- * @returns {THREE.Group} - 包含所有立方塊的群組
+ * @returns {THREE.Group} - 包含所有積木的群組
  */
 function createCubeStructure(structure) {
-    // 建立群組來容納所有小立方塊
+    // 建立群組來容納所有小積木
     const group = new THREE.Group();
 
-    // 單個小立方塊的大小 (無間隙)
+    // 單個小積木的大小 (無間隙)
     const cubeSize = 1.0;
 
     // 建立立方體幾何體 (共用以節省記憶體)
     const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
 
-    // 為每個座標建立一個小立方塊
+    // 為每個座標建立一個小積木
     structure.forEach(([x, y, z]) => {
         // 為每個面建立固定顏色的材質
-        // 立方塊的 6 個面順序: 右(+X), 左(-X), 上(+Y), 下(-Y), 前(+Z), 後(-Z)
+        // 積木的 6 個面順序: 右(+X), 左(-X), 上(+Y), 下(-Y), 前(+Z), 後(-Z)
         // 使用 MeshBasicMaterial 不受光照影響,確保顏色固定
         const materials = [
             new THREE.MeshBasicMaterial({ color: 0xcccccc }), // 右側 (+X) - 淺灰色
@@ -248,10 +248,10 @@ function createCubeStructure(structure) {
 }
 
 /**
- * 生成一個新的立方塊堆疊題目
+ * 生成一個新的積木堆疊題目
  */
 function generateNewQuestion() {
-    // 移除舊的立方塊群組
+    // 移除舊的積木群組
     if (cubeGroup) {
         scene.remove(cubeGroup);
         // 清理記憶體
@@ -270,7 +270,7 @@ function generateNewQuestion() {
     // 生成層狀結構
     const structure = generateLayeredStructure();
 
-    // 建立新的立方塊群組
+    // 建立新的積木群組
     cubeGroup = createCubeStructure(structure);
     scene.add(cubeGroup);
 
@@ -293,7 +293,7 @@ function generateNewQuestion() {
     totalQuestions++;
     updateQuestionDisplay();
 
-    console.log(`題目 ${totalQuestions}: 正確答案是 ${currentAnswer} 個立方塊`);
+    console.log(`題目 ${totalQuestions}: 正確答案是 ${currentAnswer} 個積木`);
 }
 
 // ===== 建立座標軸輔助線 =====
@@ -385,7 +385,7 @@ function animate() {
 
 // ===== 滑鼠事件處理 =====
 /**
- * 處理滑鼠拖曳以旋轉立方體
+ * 處理滑鼠拖曳以旋轉積木
  * 滑鼠水平移動 → 控制 Y 軸旋轉 (Y 軸垂直向上,像轉動陀螺)
  * 固定 X 和 Z 軸,只允許水平旋轉
  */
@@ -495,8 +495,8 @@ function checkAnswer() {
 
     if (isNaN(userAnswer) || userAnswer < 1) {
         showDialog(
-            '提示',
-            '請輸入有效的數字 (大於 0)',
+            '小提醒',
+            '要輸入數字喔！',
             null
         );
         return;
@@ -516,8 +516,8 @@ function checkAnswer() {
             }, 500);
         } else {
             showDialog(
-                '答對了!',
-                `正確答案是 ${currentAnswer} 個立方塊!\n獲得 10 分!`,
+                '答對了！好棒！',
+                `沒錯！是 ${currentAnswer} 個積木！\n你得到 10 分！`,
                 () => {
                     // 自動進入下一題
                     generateNewQuestion();
@@ -535,15 +535,15 @@ function checkAnswer() {
         if (!hasShownRotateHint) {
             hasShownRotateHint = true;
             showDialog(
-                '答錯了',
-                `您答的是 ${userAnswer} 個，再試一次吧!\n\n提示：可以拖曳旋轉立方塊來觀察結構`,
+                '再想想看！',
+                `你答 ${userAnswer} 個，不太對喔～\n\n小提示：用手指滑動可以轉轉看積木喔！`,
                 null,
                 'sad'
             );
         } else {
             showDialog(
-                '答錯了',
-                `您答的是 ${userAnswer} 個，再試一次吧!`,
+                '再想想看！',
+                `你答 ${userAnswer} 個，不太對喔～再數一次！`,
                 null,
                 'sad'
             );
@@ -696,6 +696,6 @@ window.addEventListener('DOMContentLoaded', () => {
     generateNewQuestion(); // 生成第一題
     animate();           // 開始動畫循環
 
-    console.log('立方塊算數練習程式已啟動');
-    console.log('開始答題吧!數數看有多少個立方塊?');
+    console.log('數積木遊戲開始囉！');
+    console.log('數數看有幾個積木吧！');
 });
